@@ -1,4 +1,13 @@
 import os
+
+# Disable CUDA to prevent GPU-related errors
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+# If using PyTorch, also add:
+import torch
+if torch.cuda.is_available():
+    torch.device("cpu")
+
 import streamlit as st
 
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -12,11 +21,7 @@ from langchain_huggingface import HuggingFaceEndpoint
 
 
 
-import os
 
-# Force CPU mode for PyTorch and Transformers
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-os.environ["USE_CPU"] = "1"
 
 DB_FAISS_PATH="vectorstore/db_faiss"
 @st.cache_resource
